@@ -6,6 +6,11 @@ var io = require("socket.io")(http);
 
 //Esse socket é a instância de um cliente conectado na aplicação
 io.on("connection", (socket) => {
+
+  socket.on("disconnect", () => {
+    console.log("Y desconectado: " + socket.id);
+  });
+
   socket.on("BemVindo", (data) => {
     console.log("Evento executado")
     console.log(data);
