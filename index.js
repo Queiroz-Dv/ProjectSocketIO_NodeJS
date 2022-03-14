@@ -11,13 +11,9 @@ io.on("connection", (socket) => {
     console.log("Y desconectado: " + socket.id);
   });
 
-  socket.on("BemVindo", (data) => {
-    console.log("Evento executado")
+  socket.on("msg", (data) => {
+    socket.emit("showmsg", data);
     console.log(data);
-  })
-  socket.on("palavra", (data) => {
-    console.log(data);
-    socket.emit("resultado", data + " - Por que?");
   });
 });
 

@@ -8,33 +8,37 @@
   <title>Socket IO</title>
 </head>
 
+
 <body>
-  <input type="text" name="" id="palavra" oninput="enviar()">
-  <button onclick="">Enviar</button>
-  <hr>
-  <p id="resultado">
-    <p />
+  <h1>Chat MX - Target</h1>
+  <div id="chat">
+
+  </div><br>
+  <input type="text" name="" id="msg"><br>
+  <input type="text" name="" id="username" placeholder="Seu nome de usuário">
+  <button onclick="enviar()">Enviar</button>
 </body>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+
 <script>
   var socket = io("http://localhost:4000");
-  socket.on("disconnect", ()=>{
+  socket.on("disconnect", () => {
     console.log("Desconectado");
   })
-  socket.emit("BemVindo", {
-    nome: "Queiroz-Dv"
-  });
-
-  socket.on("resultado", (data) => {
-    var p = document.getElementById("resultado");
-    p.innerHTML = data;
-  });
 
   function enviar() {
-    var input = document.getElementById("palavra");
-    socket.emit("palavra", input.value)
+    var msgField = document.getElementById("msg");
+    var usernameField = document.getElementById("username");
+
+    var msg = msgField.value;
+    var username = username.value;
+
+    socket.emit("msg", {
+      msg: msgField.value,
+      username: usernameField.value
+    });
   }
 </script>
 
