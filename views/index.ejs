@@ -6,17 +6,29 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Socket IO</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
-
+<style>
+  #chat {
+    max-height: 500px;
+    max-width: 500px;
+    background-color: antiquewhite;
+    overflow-y: scroll;
+  }
+</style>
 
 <body>
+  <div align="center">
   <h1>Chat MX - Target</h1>
+
   <div id="chat">
 
   </div><br>
-  <input type="text" name="" id="msg"><br>
+
+  <input type="text" name="" id="msg" class="form-control" placeholder="Msg...">
   <input type="text" name="" id="username" placeholder="Seu nome de usuário">
-  <button onclick="enviar()">Enviar</button>
+  <button onclick="enviar()" class="btn btn-primary btn-lg btn-block">Enviar</button>
+</div>
 </body>
 
 
@@ -28,12 +40,19 @@
     console.log("Desconectado");
   })
 
+  socket.on("showmsg", (data) => {
+    var chat = document.getElementById("chat");
+    var p = document.createElement("p");
+    p.innerHTML = data.username + ": " + data.msg;
+    chat.append(p); //Adiciona um elemento dentro de outro
+  });
+
   function enviar() {
     var msgField = document.getElementById("msg");
     var usernameField = document.getElementById("username");
 
     var msg = msgField.value;
-    var username = username.value;
+    var username = usernameField.value;
 
     socket.emit("msg", {
       msg: msgField.value,
