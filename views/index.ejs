@@ -6,35 +6,58 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Socket IO</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
+<style>
+  #chat {
+    max-height: 500px;
+    max-width: 500px;
+    background-color: antiquewhite;
+    overflow-y: scroll;
+  }
+</style>
 
 <body>
-  <input type="text" name="" id="palavra" oninput="enviar()">
-  <button onclick="">Enviar</button>
-  <hr>
-  <p id="resultado">
-    <p />
+  <div align="center">
+  <h1>Chat MX - Target</h1>
+
+  <div id="chat">
+
+  </div><br>
+
+  <input type="text" name="" id="msg" class="form-control" placeholder="Msg...">
+  <input type="text" name="" id="username" placeholder="Seu nome de usuário">
+  <button onclick="enviar()" class="btn btn-primary btn-lg btn-block">Enviar</button>
+</div>
 </body>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.js"></script>
+
 <script>
   var socket = io("http://localhost:4000");
-  socket.on("disconnect", ()=>{
+  socket.on("disconnect", () => {
     console.log("Desconectado");
   })
-  socket.emit("BemVindo", {
-    nome: "Queiroz-Dv"
-  });
 
-  socket.on("resultado", (data) => {
-    var p = document.getElementById("resultado");
-    p.innerHTML = data;
+  socket.on("showmsg", (data) => {
+    var chat = document.getElementById("chat");
+    var p = document.createElement("p");
+    p.innerHTML = data.username + ": " + data.msg;
+    chat.append(p); //Adiciona um elemento dentro de outro
   });
 
   function enviar() {
-    var input = document.getElementById("palavra");
-    socket.emit("palavra", input.value)
+    var msgField = document.getElementById("msg");
+    var usernameField = document.getElementById("username");
+
+    var msg = msgField.value;
+    var username = usernameField.value;
+
+    socket.emit("msg", {
+      msg: msgField.value,
+      username: usernameField.value
+    });
   }
 </script>
 

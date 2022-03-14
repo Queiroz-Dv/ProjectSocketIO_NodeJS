@@ -1,6 +1,6 @@
 # 🔮 Project SocketIo
 
-Projeto realizado para fins de estudos sobre comunicação em tempo real usando NodeJS e ScoketIo
+Projeto realizado para fins de estudos sobre comunicação em tempo real usando NodeJS e SocketIo
 
 ## 🎮 Comandos
 
